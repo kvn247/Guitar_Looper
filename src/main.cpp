@@ -7,12 +7,15 @@ Recorded sound is stored in PCM format at 22.05kHz 8bit
 */
 
 #include "Arduino.h"
+<<<<<<< HEAD
 #include <adc.h>
 
 #define SIZEOFBUFFER 1000
 
 uint16_t buffer[SIZEOFBUFFER];
 uint16_t toggle = 1;
+=======
+>>>>>>> parent of 196c4e4... ADC
 
 void startTimer(){
   pmc_set_writeprotect(0); //enable the write protect register of the pmc_set_writeprotect
@@ -27,10 +30,11 @@ void startTimer(){
   // TC0->TC_CHANNEL[0].TC_IER=TC_IER_CPCS;   // IER = interrupt enable register
   // TC0->TC_CHANNEL[0].TC_IDR=~TC_IER_CPCS;  // IDR = interrupt disable register
 
-  //NVIC_EnableIRQ(TC0_IRQn);               // Enable interrupt routine
+  NVIC_EnableIRQ(TC0_IRQn);               // Enable interrupt routine
 
 }
 
+<<<<<<< HEAD
 // void TC0_Handler()
 // {
 //   //was used for testing only; this handler is currently not being used
@@ -38,6 +42,14 @@ void startTimer(){
 //   TC_GetStatus(TC0, 0);
 //
 // }
+=======
+void TC0_Handler()
+{
+  // We need to get the status to clear it and allow the interrupt to fire again
+  TC_GetStatus(TC0, 0);
+
+}
+>>>>>>> parent of 196c4e4... ADC
 
 void pinInit(){
   //We want to output the counter timer onto pin 2 of the Arduino
@@ -48,6 +60,7 @@ void pinInit(){
   PIOB->PIO_ABSR |= PIO_PB25B_TIOA0 ;  // switch to B peripheral
 }
 
+<<<<<<< HEAD
 void adcSetUp(){
   pmc_enable_periph_clk(ID_ADC);
   adc_init(ADC, SystemCoreClock, ADC_FREQ_MAX, ADC_STARTUP_FAST);
@@ -83,13 +96,18 @@ void pdcSetUp(){
 
 
 
+=======
+>>>>>>> parent of 196c4e4... ADC
 void setup() {
   Serial1.begin(9600); //used for debugging only
   startTimer();
   pinInit();
+<<<<<<< HEAD
   pdcSetUp();
   adcSetUp();
   pinMode(10, OUTPUT);
+=======
+>>>>>>> parent of 196c4e4... ADC
 }
 
 void loop() {
